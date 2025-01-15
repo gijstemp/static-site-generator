@@ -10,10 +10,9 @@ class HTMLNode:
     
     def props_to_html(self):
         if self.props:
-            props_string = ""
-            for key, value in self.props.items():
-                props_string += f'{key}="{value}" '
-            return props_string.rstrip()
+            props_string = " ".join(f'{key}="{value}"' for key, value in self.props.items())
+            return f" {props_string}"
+        return ""
         
     def __eq__(self, other):
         if not isinstance(other, HTMLNode):
@@ -33,31 +32,32 @@ class LeafNode(HTMLNode):
         super().__init__(tag=tag, value=value, children=None, props=props)
         
     def to_html(self):
-        if not self.value:
-            raise ValueError
         if not self.tag:
-            return self.value
-        if self.tag == "p":
-            p_string = f"<{self.tag}>{self.value}</{self.tag}>"
-            p_string.replace('""', "")
-            return p_string
-        if self.tag == "a":
-            if self.props:
-                props_string = ""
-                for key, value in self.props.items():
-                    props_string += f'{key}="{value}" '
-                    props_string = props_string.rstrip()
-            a_string = f"<{self.tag}> {props_string}>{self.value}</{self.tag}>"
-            a_string.replace('""', "")
-            return a_string
+            return self.value  # If no tag, return just the value as plain text
+        
+        props_string = self.props_to_html()
+        return f"<{self.tag}{props_string}>{self.value}</{self.tag}>"
         
 class ParentNode(HTMLNode):
     def __init__(self, tag, children, props=None):
+        if not tag:
+            raise ValueError("The 'tag' argument is required.")
+        if not isinstance(children, list) or not children:
+            raise ValueError("The 'children' argument must be a non-empty list.")
         super().__init__(tag=tag, value=None, children=children, props=props)
         
     def to_html(self):
+        # Check if the tag is missing
         if not self.tag:
-            raise ValueError
+            raise ValueError("The 'tag' attribute is missing.")
+        # Check if children are missing
         if not self.children:
-            raise ValueError("Children arg is missing")
+            raise ValueError("The 'children' attribute is missing.")
         
+        # Convert properties to HTML if present
+        props_string = self.props_to_html()
+        
+        opening_tag = f"<{self.tag}{props_string}>"
+        children_html = "".join(child.to_html() for child in self.children)
+        closing_tag = f"</{self.tag}>"
+        return f"{opening_tag}{children_html}{closing_tag}"
