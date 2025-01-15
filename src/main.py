@@ -1,5 +1,6 @@
 from textnode import *
 from htmlnode import *
+from split_nodes_delimiter import split_nodes_delimiter
 
 # For text
 TEXT = "This is a text node"
@@ -12,12 +13,14 @@ CHILDREN = None
 PROPS = {"href": "https://www.google.com", "target": "_blank",}
 
 def main():
-    textnode = TextNode(TEXT, TextType.BOLD, URL)
+    textnode = TextNode("This is *italic* text", TextType.TEXT)
     htmlnode = HTMLNode(TAG, VALUE, CHILDREN, PROPS)
-    leafnode1 = LeafNode("p", "This is a paragraph of text.")
-    leafnode2 = LeafNode("a", "Click me!", {"href": "https://www.google.com"})
-    print(leafnode1.to_html())
-    print(leafnode2.to_html())
-
+    leafnode = LeafNode("a", "Click me!", {"href": "https://www.google.com"})
+    
+    new_nodes = split_nodes_delimiter([textnode], "`", TextType.CODE)
+    
+    print(textnode)
+    print(new_nodes)
+    
 if __name__ == "__main__":
     main()
