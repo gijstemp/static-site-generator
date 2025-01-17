@@ -1,6 +1,6 @@
 from textnode import *
 from htmlnode import *
-from split_nodes_delimiter import split_nodes_delimiter
+from split_nodes_functions import split_nodes_delimiter
 
 # For text
 TEXT = "This is a text node"
