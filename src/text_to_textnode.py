@@ -4,10 +4,11 @@ from textnode import TextType, TextNode
 import re
 
 def text_to_textnodes(text):
-    node = [TextNode(text, TextType.TEXT)]
-    new_node = split_nodes_image(node)
-    new_node = split_nodes_link(new_node)
-    new_node = split_nodes_delimiter(new_node, "**", TextType.BOLD)
-    new_node = split_nodes_delimiter(new_node, "*", TextType.ITALIC)
-    new_node = split_nodes_delimiter(new_node, "`", TextType.CODE)
-    return new_node
+    nodes = [TextNode(text, TextType.TEXT)]
+    # Process inline formatting in the correct order
+    nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)   # Bold
+    nodes = split_nodes_delimiter(nodes, "*", TextType.ITALIC)  # Italic
+    nodes = split_nodes_delimiter(nodes, "`", TextType.CODE)    # Code
+    nodes = split_nodes_link(nodes)                             # Links
+    nodes = split_nodes_image(nodes)                            # Images
+    return nodes

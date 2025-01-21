@@ -3,29 +3,25 @@ import re
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
-
     for node in old_nodes:
         if node.text_type == TextType.TEXT:
-            # Split the text by the delimiter while keeping the delimiter segments
+            # Split the text by the delimiter
             parts = node.text.split(delimiter)
 
-            # Check for unmatched delimiters
+            # Ensure that delimiters are properly matched
             if len(parts) % 2 == 0:
                 raise ValueError(f"Unmatched delimiter '{delimiter}' found in text: {node.text}")
 
             for i, part in enumerate(parts):
-                if i % 2 == 0:
-                    # Even indices are regular text
+                if i % 2 == 0:  # Plain text outside the delimiter
                     if part:
                         new_nodes.append(TextNode(part, TextType.TEXT))
-                else:
-                    # Odd indices are within the delimiters
+                else:  # Text inside the delimiter
                     if part:
                         new_nodes.append(TextNode(part, text_type))
         else:
-            # Add non-text nodes as they are
+            # Non-text nodes are appended as-is
             new_nodes.append(node)
-
     return new_nodes
 
 def split_nodes_image(old_nodes):
