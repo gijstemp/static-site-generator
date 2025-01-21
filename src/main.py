@@ -1,5 +1,5 @@
 import os
-from copy_directory import copy_directory_recursive
+from copy_directory import *
 
 def main():
     source_dir = "static"

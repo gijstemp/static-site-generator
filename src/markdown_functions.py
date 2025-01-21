@@ -67,9 +67,11 @@ def markdown_to_html_node(markdown):
     return parent_node
 
 
-markdown_text = """- Item 1
-- Item 2
-- Item 3"""
-
-html_tree = markdown_to_html_node(markdown_text)
-print(html_tree.to_html())
+def extract_title(markdown):
+    blocks = markdown_to_blocks(markdown)
+    for block in blocks:
+        if block.startswith("# "):
+            return block.strip("#").lstrip()
+        else:
+            raise Exception("No h1 found")
+        
