@@ -1,26 +1,15 @@
-from textnode import *
-from htmlnode import *
-from split_nodes_functions import split_nodes_delimiter
-
-# For text
-TEXT = "This is a text node"
-URL = "www.something.com"
-
-# for HTML
-TAG = "p"
-VALUE = "This is a test text"
-CHILDREN = None
-PROPS = {"href": "https://www.google.com", "target": "_blank",}
+import os
+from copy_directory import copy_directory_recursive
 
 def main():
-    textnode = TextNode("This is *italic* text", TextType.TEXT)
-    htmlnode = HTMLNode(TAG, VALUE, CHILDREN, PROPS)
-    leafnode = LeafNode("a", "Click me!", {"href": "https://www.google.com"})
-    
-    new_nodes = split_nodes_delimiter([textnode], "`", TextType.CODE)
-    
-    print(textnode)
-    print(new_nodes)
+    source_dir = "static"
+    destination_dir = "public"
+
+    if not os.path.exists(source_dir):
+        print(f"Source directory '{source_dir}' does not exist. Please create it and add content.")
+    else:
+        copy_directory_recursive(source_dir, destination_dir)
+        print("All contents have been copied successfully.")
     
 if __name__ == "__main__":
     main()
