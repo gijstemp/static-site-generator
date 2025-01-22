@@ -1,6 +1,12 @@
 import unittest
-from textnode import TextType, TextNode
-from split_nodes_functions import split_nodes_image, split_nodes_link
+import sys
+import os
+
+# Add the src directory to the Python path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from core_functions.textnode import TextType, TextNode
+from core_functions.split_nodes_functions import split_nodes_image, split_nodes_link
 
 class TestSplitNodesFunctions(unittest.TestCase):
 

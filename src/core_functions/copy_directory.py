@@ -25,7 +25,9 @@ def copy_directory_recursive(source, destination):
         destination_item_path = os.path.join(destination, item)
 
         if os.path.isfile(source_item_path):
+            # If the item is a file, copy it to the destination
             shutil.copy(source_item_path, destination_item_path)
             print(f"Copied file: {source_item_path} -> {destination_item_path}")
         elif os.path.isdir(source_item_path):
+            # If the item is a directory, recursively copy its contents
             copy_directory_recursive(source_item_path, destination_item_path)

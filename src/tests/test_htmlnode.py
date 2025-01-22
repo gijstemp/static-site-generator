@@ -1,6 +1,11 @@
 import unittest
+import sys
+import os
 
-from htmlnode import HTMLNode
+# Add the src directory to the Python path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from core_functions.htmlnode import HTMLNode
 
 class TestHTMLNode(unittest.TestCase):
     def test_eq(self):

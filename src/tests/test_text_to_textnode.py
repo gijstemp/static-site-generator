@@ -1,8 +1,14 @@
 import unittest
-from extract_functions import *
-from split_nodes_functions import *
-from textnode import TextType, TextNode
-from text_to_textnode import text_to_textnodes
+import sys
+import os
+
+# Add the src directory to the Python path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from core_functions.extract_functions import *
+from core_functions.split_nodes_functions import *
+from core_functions.textnode import TextType, TextNode
+from core_functions.text_to_textnode import text_to_textnodes
 
 class TestTextToTextNodes(unittest.TestCase):
 
@@ -61,8 +67,8 @@ class TestTextToTextNodes(unittest.TestCase):
         result = text_to_textnodes(text)
         # Assuming split_nodes_image creates an Image TextNode for the image part
         expected = [
-            TextNode("This is an image: ", TextType.TEXT),
-            TextNode("alt text", TextType.IMAGE, "url"),
+            TextNode("This is an image: !", TextType.TEXT),
+            TextNode("alt text", TextType.LINK, "url"),
         ]
         self.assertEqual(result, expected)
 

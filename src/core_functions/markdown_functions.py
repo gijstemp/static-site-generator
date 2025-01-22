@@ -1,14 +1,29 @@
 import re
-from htmlnode import *
-from textnode import *
-from text_to_textnode import *
+from .htmlnode import *
+from .textnode import *
+from .text_to_textnode import *
 
 def markdown_to_blocks(markdown):
+    """
+    Splits markdown text into blocks separated by double newlines.
+
+    Args:
+        markdown (str): The markdown text to split.
+    Returns:
+        list: A list of markdown blocks.
+    """
     blocks = [block.strip() for block in markdown.split("\n\n") if block.strip()]
-   
     return blocks
 
 def block_to_block_type(markdown_block):
+    """
+    Determines the type of a markdown block.
+
+    Args:
+        markdown_block (str): A single block of markdown text.
+    Returns:
+        str: The type of the markdown block (e.g., "heading", "code", "quote", "unordered_list", "ordered_list", "paragraph").
+    """
     if markdown_block.startswith("#"):
         return "heading"
     elif markdown_block.startswith("```") and markdown_block.endswith("```"):
@@ -23,6 +38,14 @@ def block_to_block_type(markdown_block):
         return "paragraph"
 
 def markdown_to_html_node(markdown):
+    """
+    Converts markdown text to an HTMLNode tree.
+
+    Args:
+        markdown (str): The markdown text to convert.
+    Returns:
+        ParentNode: The root HTMLNode representing the converted HTML structure.
+    """
     blocks = markdown_to_blocks(markdown)
     child_nodes = []
 
@@ -72,10 +95,19 @@ def markdown_to_html_node(markdown):
     return ParentNode("div", child_nodes)
 
 def extract_title(markdown):
+    """
+    Extracts the title from markdown text.
+
+    Args:
+        markdown (str): The markdown text to extract the title from.
+    Returns:
+        str: The extracted title.
+
+    Raises:
+        Exception: If no h1 heading is found.
+    """
     blocks = markdown_to_blocks(markdown)
     for block in blocks:
         if block.startswith("# "):
             return block.strip("#").lstrip()
-        else:
-            raise Exception("No h1 found")
-        
+    raise Exception("No h1 found")

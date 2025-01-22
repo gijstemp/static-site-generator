@@ -1,12 +1,15 @@
 import os
-from copy_directory import *
-from generate_page import *
+from core_functions.copy_directory import *
+from core_functions.generate_page import *
 
-def main():  
-    content_dir = "content"
-    public_dir = "public"
-    static_dir = "static"
-    template_file = "template.html"
+def main():
+    """
+    Main function to generate a static site.
+    """
+    content_dir = "content"  # Directory containing markdown files
+    public_dir = "public"    # Directory to output the generated HTML files
+    static_dir = "static"    # Directory containing static files to be copied
+    template_file = "template.html"  # HTML template file
     
     # Step 1: Clean and prepare the public directory
     if os.path.exists(public_dir):

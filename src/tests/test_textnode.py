@@ -1,6 +1,12 @@
 import unittest
-from htmlnode import *
-from textnode import TextNode, TextType, text_node_to_html_node
+import sys
+import os
+
+# Add the src directory to the Python path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from core_functions.htmlnode import *
+from core_functions.textnode import TextNode, TextType, text_node_to_html_node
 
 class TestTextNode(unittest.TestCase):
     def test_eq(self):

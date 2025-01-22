@@ -1,6 +1,11 @@
 import unittest
+import sys
+import os
 
-from htmlnode import ParentNode, LeafNode
+# Add the src directory to the Python path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from core_functions.htmlnode import ParentNode, LeafNode
 
 class TestParentNode(unittest.TestCase):
     def test_basic_structure(self):

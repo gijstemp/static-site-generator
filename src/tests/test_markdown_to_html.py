@@ -1,18 +1,24 @@
 import unittest
-from htmlnode import *
-from markdown_functions import *
+import sys
+import os
+
+# Add the src directory to the Python path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from core_functions.htmlnode import *
+from core_functions.markdown_functions import *
 
 class TestMarkdownToHTMLNode(unittest.TestCase):
     def test_heading(self):
         markdown = "# Heading 1"
         html_node = markdown_to_html_node(markdown)
-        expected_html = "<div><h1><span>Heading 1</span></h1></div>"
+        expected_html = "<div><h1>Heading 1</h1></div>"
         self.assertEqual(html_node.to_html(), expected_html)
 
     def test_paragraph(self):
         markdown = "This is a paragraph."
         html_node = markdown_to_html_node(markdown)
-        expected_html = "<div><p><span>This is a paragraph.</span></p></div>"
+        expected_html = "<div><p>This is a paragraph.</p></div>"
         self.assertEqual(html_node.to_html(), expected_html)
 
     def test_unordered_list(self):
@@ -34,7 +40,7 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
     def test_quote(self):
         markdown = "> This is a quote."
         html_node = markdown_to_html_node(markdown)
-        expected_html = "<div><blockquote><span>This is a quote.</span></blockquote></div>"
+        expected_html = "<div><blockquote>This is a quote.</blockquote></div>"
         self.assertEqual(html_node.to_html(), expected_html)
 
     def test_code_block(self):
@@ -62,7 +68,7 @@ Code block
 
 ## Heading 2"""
         html_node = markdown_to_html_node(markdown)
-        expected_html = ("<div><h1><span>Heading 1</span></h1><p><span>This is a paragraph.</span></p><ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul><blockquote><span>This is a quote.</span></blockquote><pre><code>Code block</code></pre><h2><span>Heading 2</span></h2></div>")
+        expected_html = ("<div><h1>Heading 1</h1><p>This is a paragraph.</p><ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul><blockquote>This is a quote.</blockquote><pre><code>Code block</code></pre><h2>Heading 2</h2></div>")
         self.assertEqual(html_node.to_html(), expected_html)
 
 if __name__ == "__main__":

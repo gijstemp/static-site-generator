@@ -1,6 +1,12 @@
 import unittest
-from textnode import TextType, TextNode
-from split_nodes_functions import split_nodes_delimiter
+import sys
+import os
+
+# Add the src directory to the Python path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from core_functions.textnode import TextType, TextNode
+from core_functions.split_nodes_functions import split_nodes_delimiter
 
 class TestSplitNodesDelimiter(unittest.TestCase):
     def test_basic_delimiter(self):
