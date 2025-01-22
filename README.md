@@ -3,6 +3,7 @@
 This project is a static site generator that converts markdown files into HTML pages using a specified template. It also copies static files to the output directory.
 
 ## Project Structure
+```
 src 
 ├── pycache 
 ├── core_functions 
@@ -30,7 +31,7 @@ src
 │ └── test_textnode.py 
 ├── main.py 
 └── README.md
-
+```
 
 ## Installation
 
